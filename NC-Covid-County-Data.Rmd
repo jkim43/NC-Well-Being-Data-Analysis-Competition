@@ -1,0 +1,47 @@
+---
+title: "COVID-Data"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## R Markdown
+
+This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+
+When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+
+```{r cars}
+covid19.df <- read.csv("https://raw.githubusercontent.com/nytimes/covid-19-data/master/us-counties.csv")
+
+library(tidyr)
+library(ggplot2)
+library(dplyr)
+library(ISLR)
+library(caret)
+library(glmnet)
+library(leaps)
+library(missMDA)
+library(VIM)
+library(FactoMineR)
+library(pls)
+
+covid19.df <- covid19.df %>% 
+  filter(state == "North Carolina") %>% 
+  select(county, cases, deaths)
+
+case.fatality.rate.df = covid19.df %>%
+    mutate(CFR = (deaths/(cases)*100)) %>%
+    group_by(county) 
+    summarize(n=n()) 
+    ###arrange(desc(CFR)) 
+
+case.fatality.rate.df %>% head(n = 10)
+```
+
+```{r}
+
+```
+
